@@ -1,10 +1,10 @@
 {
-  "name": "express-starter",
-  "version": "0.0.2",
-  "description": "Basic, but useful Express JS starter app template. This template includes express, express-session, morgan, nunjucks as the templating engine, prettier as the formater, and Prisma as the ORM. ",
+  "name": "inventory",
+  "version": "0.0.1",
+  "description": "An API to store information about items stored around your house or your room. Information like name of the item, size, color, location, etc. ",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon -e html,js --watch src",
+    "dev": "nodemon",
     "format": "prettier --single-quote --write ."
   },
   "author": "rafael-abuawad",
@@ -13,9 +13,10 @@
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "express-session": "^1.17.1",
+    "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
-    "nunjucks": "^3.2.2"
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0"
   },
   "devDependencies": {
     "@prisma/cli": "^2.14.0",
