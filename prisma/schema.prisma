@@ -6,3 +6,33 @@ datasource db {
 generator client {
   provider = "prisma-client-js"
 }
+
+model User {
+  id            String  @id @default(uuid())
+  username      String  @unique
+  hash          String  
+  items         Item[]
+  locations     Location[]
+}
+
+model Item {
+  id            String    @id @default(uuid())
+  createdAt     DateTime  @default(now())
+  name          String
+  description   String?
+  color         String
+  size          String
+  owner         User?     @relation(fields: [ownerId], references: [id])
+  ownerId       String? 
+  location      Location? @relation(fields: [locationId], references: [id])
+  locationId    String? 
+}
+
+model Location {
+  id            String   @id @default(uuid())
+  title         String
+  description   String?
+  owner         User?    @relation(fields: [ownerId], references: [id])
+  ownerId       String?
+  items         Item[] 
+}

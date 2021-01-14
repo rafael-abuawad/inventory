@@ -4,6 +4,9 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const path = require('path');
 
+const auth = require('./modules/auth/auth.router');
+const users = require('./modules/users/users.router');
+
 const app = express();
 
 // App config
@@ -18,8 +21,28 @@ app.use('static', express.static(app.get('static')));
 app.use(morgan(app.get('env') == 'production' ? 'common' : 'dev'));
 
 // App routes
-app.get('/', (req, res) => {
-  res.send('Base route');
+app.use('/api/auth', auth);
+app.use('/api/users', users);
+app.use('/api', (req, res) => {
+  res.json({
+    title: 'Invetory RESTful API',
+    description:
+      'An API to store information about items stored around your house or your room. Information like name of the item, size, color, location, etc. ',
+    contact: {
+      name: 'Rafael Abuawad',
+      url: 'https://github.com/rafael-abuawad',
+    },
+    license: {
+      name: 'MIT',
+      url: 'https://github.com/rafael-abuawad/inventory/blob/master/LICENSE',
+    },
+    version: '0.0.1',
+  });
+});
+
+// Error handler
+app.use(async (err, req, res, next) => {
+  res.status(500).json({ error: err });
 });
 
 app.listen(app.get('port'), () =>
