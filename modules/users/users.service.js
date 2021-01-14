@@ -17,6 +17,17 @@ module.exports.findById = async (id) => {
   return { id: user.id, username: user.username };
 };
 
+module.exports.findProfile = async (id) => {
+  const user = await prisma.user.findUnique({
+    where: { id },
+    include: {
+      items: true,
+      locations: true,
+    },
+  });
+  return { id: user.id, username: user.username };
+};
+
 module.exports.create = async (username, password) => {
   const saltRounds = 10;
   const salt = bcrypt.genSaltSync(saltRounds);
@@ -35,7 +46,7 @@ module.exports.validate = async (username, password) => {
     where: { username: username.trim().toLowerCase() },
   });
   if (user) {
-    const valid = bcrypt.compareSync(user.hash, password);
+    const valid = bcrypt.compareSync(password, user.hash);
     if (valid) {
       return { id: user.id, username: user.username };
     }

@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const path = require('path');
+const jwt = require('express-jwt');
 
 const auth = require('./modules/auth/auth.router');
 const users = require('./modules/users/users.router');
@@ -19,6 +20,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('static', express.static(app.get('static')));
 app.use(morgan(app.get('env') == 'production' ? 'common' : 'dev'));
+
+// JWT middleware
+app.use(
+  jwt({ secret: process.env.APP_SECRET, algorithms: ['HS256'] }).unless({
+    path: ['/api/auth/login', '/api/auth/signup'],
+  })
+);
 
 // App routes
 app.use('/api/auth', auth);
@@ -42,7 +50,12 @@ app.use('/api', (req, res) => {
 
 // Error handler
 app.use(async (err, req, res, next) => {
-  res.status(500).json({ error: err });
+  res.status(err.status || 500).json({
+    error: {
+      title: err.name,
+      message: err.message,
+    },
+  });
 });
 
 app.listen(app.get('port'), () =>
