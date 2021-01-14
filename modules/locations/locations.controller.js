@@ -23,7 +23,9 @@ module.exports.getLocationById = async (req, res, next) => {
 module.exports.createLocation = async (req, res, next) => {
   try {
     const { title, description } = req.body;
-    const location = await locationsService.create(title, description, ownerId);
+    const { sub } = req.user;
+    
+    const location = await locationsService.create(title, description, sub);
     res.json(location);
   } catch (err) {
     next(err);

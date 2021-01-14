@@ -23,10 +23,10 @@ module.exports.create = async (title, description, ownerId) => {
 };
 
 module.exports.update = async (id, title, description, ownerId) => {
-  const location = await prisma.location.findUnique({ where: { id } });
+  let location = await prisma.location.findUnique({ where: { id } });
 
   if (location.ownerId == ownerId) {
-    const location = await prisma.location.update({
+    location = await prisma.location.update({
       where: {
         id,
       },

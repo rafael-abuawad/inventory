@@ -6,6 +6,7 @@ const path = require('path');
 const jwt = require('express-jwt');
 
 const auth = require('./modules/auth/auth.router');
+const items = require('./modules/items/items.router');
 const locations = require('./modules/locations/locations.router');
 const users = require('./modules/users/users.router');
 
@@ -31,6 +32,7 @@ app.use(
 
 // App routes
 app.use('/api/auth', auth);
+app.use('/api/items', items);
 app.use('/api/locations', locations);
 app.use('/api/users', users);
 app.use('/api', (req, res) => {
