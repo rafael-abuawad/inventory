@@ -13,42 +13,45 @@ module.exports.find = async () => {
 };
 
 module.exports.findById = async (id) => {
-  const user = await prisma.user.findUnique({ where: { id } });
-  return { id: user.id, username: user.username };
+  const { hash, ...user } = await prisma.user.findUnique({ where: { id } });
+  return user;
 };
 
 module.exports.findProfile = async (id) => {
-  const user = await prisma.user.findUnique({
+  const { hash, ...user } = await prisma.user.findUnique({
     where: { id },
     include: {
       items: true,
       locations: true,
     },
   });
-  return { id: user.id, username: user.username };
+
+  return user;
 };
 
 module.exports.create = async (username, password) => {
   const saltRounds = 10;
   const salt = bcrypt.genSaltSync(saltRounds);
-  const hash = bcrypt.hashSync(password, salt);
-  const user = await prisma.user.create({
-    data: { username: username.trim().toLowerCase(), hash },
+  const passwordHash = bcrypt.hashSync(password, salt);
+  const { hash, ...user } = await prisma.user.create({
+    data: { username: username.trim().toLowerCase(), hash: passwordHash },
   });
+
   if (user) {
-    return { id: user.id, username: user.username };
+    return user;
   }
   throw new Error('Username already taken');
 };
 
 module.exports.validate = async (username, password) => {
-  const user = await prisma.user.findUnique({
+  const { hash, ...user } = await prisma.user.findUnique({
     where: { username: username.trim().toLowerCase() },
   });
+
   if (user) {
-    const valid = bcrypt.compareSync(password, user.hash);
+    const valid = bcrypt.compareSync(password, hash);
     if (valid) {
-      return { id: user.id, username: user.username };
+      return user;
     }
     throw new Error('Wrong password');
   }
