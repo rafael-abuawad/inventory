@@ -1,6 +1,5 @@
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
-const prisma = new PrismaClient();
 
 export class UserService {
   constructor(private prisma: PrismaClient = new PrismaClient()) {}
@@ -57,7 +56,7 @@ export class UserService {
   }
 
   async validate(username: string, password: string) {
-    const user = await prisma.user.findUnique({
+    const user = await this.prisma.user.findUnique({
       where: { username: username.trim().toLowerCase() },
     });
 
