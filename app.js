@@ -15,12 +15,12 @@ const app = express();
 // App config
 app.set('port', process.env.PORT || 8080);
 app.set('views', path.join(__dirname, 'views'));
-app.set('static', path.join(__dirname, 'public'));
+app.set('uploads items', path.join(__dirname, 'uploads/items'));
 
 // App middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use('static', express.static(app.get('static')));
+app.use('/uploads/items', express.static(app.get('uploads items')));
 app.use(morgan(app.get('env') == 'production' ? 'common' : 'dev'));
 
 // JWT middleware

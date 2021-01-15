@@ -21,20 +21,30 @@ module.exports.getItemById = async (req, res, next) => {
 };
 
 module.exports.createItem = async (req, res, next) => {
-  try {
-    const { name, description, color, size, locationId } = req.body;
-    const { sub } = req.user;
-    const item = await itemsService.create(
-      name,
-      description,
-      color,
-      size,
-      sub,
-      locationId
-    );
-    res.json(item);
-  } catch (err) {
-    next(err);
+  if (req.file) {
+    try {
+      const { name, description, color, size, locationId } = req.body;
+      const { sub } = req.user;
+      const imagePath = '/' + req.file.path.replace(/\\/g, '/');
+
+      const item = await itemsService.create(
+        name,
+        description,
+        imagePath,
+        color,
+        size,
+        sub,
+        locationId
+      );
+      res.json(item);
+    } catch (err) {
+      next(err);
+    }
+  } else {
+    next({
+      name: 'File required',
+      message: 'The item picture is a required field',
+    });
   }
 };
 

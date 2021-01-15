@@ -14,6 +14,7 @@ module.exports.findById = async (id) => {
 module.exports.create = async (
   name,
   description,
+  imagePath,
   color,
   size,
   ownerId,
@@ -23,6 +24,7 @@ module.exports.create = async (
     data: {
       name,
       description,
+      imagePath,
       color,
       size,
       owner: { connect: { id: ownerId } },

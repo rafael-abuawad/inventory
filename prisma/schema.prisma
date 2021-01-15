@@ -22,6 +22,7 @@ model Item {
   description   String?
   color         String
   size          String
+  imagePath     String    @default("\\uploads\\items\\none.png")
   owner         User?     @relation(fields: [ownerId], references: [id])
   ownerId       String? 
   location      Location? @relation(fields: [locationId], references: [id])
