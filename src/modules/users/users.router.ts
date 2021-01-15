@@ -13,4 +13,4 @@ router
   .route('/:id')
   .get(userController.findUserById);
 
-module.exports = router;
+export default router;

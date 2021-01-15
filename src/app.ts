@@ -6,10 +6,10 @@ import morgan from 'morgan';
 import jwt from 'express-jwt';
 config();
 
-const auth = require('./modules/auth/auth.router');
-const items = require('./modules/items/items.router');
-const locations = require('./modules/locations/locations.router');
-const users = require('./modules/users/users.router');
+import auth from './modules/auth/auth.router';
+import items from './modules/items/items.router';
+import locations from './modules/locations/locations.router';
+import users from './modules/users/users.router';
 import api from './app.router';
 
 const app = express();

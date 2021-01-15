@@ -18,4 +18,4 @@ router
   .route('/profile')
   .get(authController.getProfile);
 
-module.exports = router;
+export default router;

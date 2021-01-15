@@ -35,4 +35,4 @@ router
   .put(itemController.updateItem)
   .delete(itemController.deleteItem);
 
-module.exports = router;
+export default router;
