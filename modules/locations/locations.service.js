@@ -7,7 +7,7 @@ module.exports.find = async (ownerId) => {
 };
 
 module.exports.findById = async (id) => {
-  const location = await prisma.location.findUnique({ where: { id } });
+  const location = await prisma.location.findUnique({ where: { id }, include: { items: true } });
   return location;
 };
 
