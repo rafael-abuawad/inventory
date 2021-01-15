@@ -1,6 +1,7 @@
-const { Router } = require('express');
-const authController = require('./auth.controller');
+import { Router } from 'express';
+import { AuthController } from './auth.controller';
 const router = Router();
+const authController = new AuthController();
 
 // prettier-ignore
 router

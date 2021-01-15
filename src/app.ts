@@ -41,7 +41,7 @@ app.use('/api/users', users);
 app.use('/api', api);
 
 // Error handler
-app.use(async (error: Error, req: Request, res: Response) => {
+app.use(async (error: Error, _req: Request, res: Response) => {
   res.status(500).json({ error });
 });
 

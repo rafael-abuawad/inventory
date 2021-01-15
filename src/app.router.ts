@@ -1,7 +1,7 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 const router = Router();
 
-router.route('/').get((req, res) => {
+router.route('/').get((_req: Request, res: Response) => {
   res.json({
     title: 'Invetory RESTful API',
     description:
