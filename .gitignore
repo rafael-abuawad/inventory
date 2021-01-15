@@ -1,7 +1,7 @@
 ## Uploaded files
-uploads/items/*.png
-uploads/items/*.jpg
-uploads/items/*.jpeg
+src/uploads/items/*.png
+src/uploads/items/*.jpg
+src/uploads/items/*.jpeg
 
 # Databses
 *.db
