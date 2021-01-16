@@ -6,10 +6,10 @@ import morgan from 'morgan';
 import jwt from 'express-jwt';
 config();
 
-import auth from './modules/auth/auth.router';
-import items from './modules/items/items.router';
-import locations from './modules/locations/locations.router';
-import users from './modules/users/users.router';
+import auth from './auth/auth.router';
+import items from './items/items.router';
+import locations from './locations/locations.router';
+import users from './users/users.router';
 import api from './app.router';
 
 const app = express();
@@ -23,8 +23,8 @@ const LOGS = app.get('env') === 'production' ? 'common' : 'dev';
 // App middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(morgan(LOGS));
 app.use('/uploads/items', express.static(ITEM_UPLOADS_ROUTE));
+app.use(morgan(LOGS));
 
 // JWT middleware
 app.use(
